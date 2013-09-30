@@ -1,7 +1,7 @@
 var express = require('express')
   , ForgotPassword = require('./model')
 
-module.exports = function(config, db, Customer){
+module.exports = function(co, Customer){
     
   var app = express()
 

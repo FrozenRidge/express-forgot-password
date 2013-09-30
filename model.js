@@ -1,7 +1,6 @@
-var Schema = require('mongoose').Schema
+var mongoose = require('mongoose')
+  , Schema = mongoose.Schema
   , crypto = require('crypto')
-  , db = require('../db')
-  , config = require('../config')
 
 var _createCode = function(){
   return crypto.randomBytes(10).toString('hex')
@@ -58,5 +57,5 @@ ForgotPasswordSchema.static('generate', function(customer, cb){
 
 })
 
-var ForgotPassword = module.exports = db.model('ForgotPassword', ForgotPasswordSchema)
+var ForgotPassword = module.exports = mongoose.model('ForgotPassword', ForgotPasswordSchema)
 
