@@ -1,8 +1,10 @@
 var crypto = require('crypto')
   , mailer = require('nodemailer')
+  , mongoose = require('mongoose')
 
-module.exports = function(mongoose, mailConfig, mailFrom, resetMailSubject, resetMailContent) {
+module.exports = function(dbconn, mailConfig, mailFrom, resetMailSubject, resetMailContent) {
   var Schema = mongoose.Schema
+  mongoose.connect(dbconn);
 
 var _createCode = function(){
   return crypto.randomBytes(10).toString('hex')
@@ -46,7 +48,7 @@ ForgotPasswordSchema.static('generate', function(customer, cb){
   var forgot = new this({
     email: customer.email
   })
-
+  
   forgot.save(function(err, forgot){
     if (err) return cb(err);
 

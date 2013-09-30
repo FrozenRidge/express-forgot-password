@@ -5,8 +5,6 @@ Express sub-app for a forgotton password flow.
 ## Assumptions:
 - Mongodb / mongoose
 - User model has `.findByEmail`
-- config.mailConfig : nodemailer
-- config.name : app name
 
 ## Usage:
 

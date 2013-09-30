@@ -10,12 +10,14 @@ module.exports = function(ForgotPassword, Customer){
   })
 
   app.post('/auth/forgot', function(req, res, next){
+    console.log("!!!")
     Customer.findByEmail(req.body.email, function(err, cus){
       if (err || cus.length == 0){
         return res.redirect("/auth/forgot?fail=1")
       }
       
       ForgotPassword.generate(cus[0], function(err){
+        console.log(">>>")
         res.render('customer-forgot-sent.html', {customer: cus[0]});
       })
     })
@@ -31,7 +33,6 @@ module.exports = function(ForgotPassword, Customer){
       return res.redirect("/auth/forgot") 
 
     ForgotPassword.verify(req.body.token, function(err, fg){
-      console.log("!!", err, res)
       
       if (err){
         console.log(">> ForgotPassword : Reset Error : ", err)

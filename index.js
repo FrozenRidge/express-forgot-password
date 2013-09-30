@@ -1,13 +1,12 @@
 module.exports = function(opts){
 
-  if (! opts.mongoose ) {
-    throw "express-forgot-password needs a connected mongoose object"
+  if (! opts.dbconn ) {
+    throw "express-forgot-password needs a mongodb url"
   }
 
   if (! opts.mailFrom )
     opts.mailFrom = "No Reply <noreply@noreply.com>"
 
-  
   if (! opts.resetMailSubject )
     opts.resetMailSubject = "Reset your password"
 
@@ -18,7 +17,7 @@ module.exports = function(opts){
     throw "express-forgot-password needs a function resetMailContent(user, token) to supply the email body"
 
   var model = require('./model')(
-        opts.mongoose
+        opts.dbconn
       , opts.mailConfig
       , opts.mailFrom
       , opts.resetMailSubject
