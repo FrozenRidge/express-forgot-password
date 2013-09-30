@@ -1,7 +1,7 @@
 var express = require('express')
-  , ForgotPassword = require('./model')
+  , ForgotPassword = require('./model')(mongoose)
 
-module.exports = function(co, Customer){
+module.exports = function(config, mongoose, Customer){
     
   var app = express()
 
