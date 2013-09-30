@@ -9,7 +9,7 @@ Express sub-app for a forgotton password flow.
 
 ```javascript
 
-var forgotton = require('express-forgotton-password')({ config: config, db : db, user : UserModel })
+var forgotton = require('express-forgotton-password')({ config: config, user : UserModel })
 app.use(forgotton.app)
 
 ```
