@@ -1,7 +1,7 @@
 var crypto = require('crypto')
+  , mailer = require('nodemailer')
 
-
-module.exports = function(mongoose) {
+module.exports = function(mongoose, mailConfig, mailFrom, resetMailSubject, resetMailContent) {
   var Schema = mongoose.Schema
 
 var _createCode = function(){
@@ -20,7 +20,7 @@ ForgotPasswordSchema.static('verify', function(token, cb){
       return cb("Invalid Code")
     }
 
-    if (Date.now() - forgot.sent > config.forgotpassword_expiry){ 
+    if (Date.now() - forgot.sent > (1000*60*60*12)){
       return cb("Invalid Code: Expired")
     }
 
@@ -51,15 +51,22 @@ ForgotPasswordSchema.static('generate', function(customer, cb){
     if (err) return cb(err);
 
     console.log(">>> ForgotPassword sent:", customer.email)
-    customer.sendEmail(
-      "Reset your password for Hosted Strider"
-    , 'customer-forgot-email.html'
-    , { token : forgot.code}, cb)
+    var emailTransport = mailer.createTransport("SMTP", mailConfig)
+
+    var envelope = {
+      from: mailFrom
+    , to: customer.email
+    , subject: resetMailSubject
+    , text: resetMailContent(customer, '/reset-password?id=' + forgot.code)
+    }
+
+    emailTransport.sendMail(envelope, cb)
   })
 
 })
 
 var ForgotPassword = mongoose.model('ForgotPassword', ForgotPasswordSchema)
-  return Forgot Password
+
+return ForgotPassword
 
 }
