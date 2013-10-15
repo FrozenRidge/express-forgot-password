@@ -4,7 +4,7 @@ var crypto = require('crypto')
 
 module.exports = function(dbconn, mailConfig, mailFrom, resetMailSubject, resetMailContent) {
   var Schema = mongoose.Schema
-  mongoose.connect(dbconn);
+  mongoose.createConnection(dbconn);
 
 var _createCode = function(){
   return crypto.randomBytes(10).toString('hex')
