@@ -1,6 +1,6 @@
 module.exports = function(opts){
 
-  if (! opts.dbconn ) {
+  if (! opts.db ) {
     throw "express-forgot-password needs a mongodb url"
   }
 
@@ -17,11 +17,11 @@ module.exports = function(opts){
     throw "express-forgot-password needs a function resetMailContent(user, token) to supply the email body"
 
   var model = require('./model')(
-        opts.dbconn
-      , opts.mailConfig
+        opts.mailConfig
       , opts.mailFrom
       , opts.resetMailSubject
       , opts.resetMailContent
+      , opts.db
       )
   
   return {

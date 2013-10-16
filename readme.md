@@ -14,7 +14,7 @@ var forgotton = require('express-forgotton-password')({
  // None of this is optional :(
   mailConfig: config // config for nodemailer
 , mailFrom: "nomail" // mailer from address
-, mongoose: mongoose // Passing mongoose here _sucks_
+, db: mongoose
 , resetMailSubject : "Reset yout mysite password"
 , resetMailContent : function(user, token){ 
     return "reset link: http://mysite" + token + " \n thanks" 

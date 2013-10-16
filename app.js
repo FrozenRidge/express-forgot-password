@@ -10,14 +10,12 @@ module.exports = function(ForgotPassword, Customer){
   })
 
   app.post('/auth/forgot', function(req, res, next){
-    console.log("!!!")
     Customer.findByEmail(req.body.email, function(err, cus){
       if (err || cus.length == 0){
         return res.redirect("/auth/forgot?fail=1")
       }
-      
+      console.log("Generating forgotton password for", cus[0].email) 
       ForgotPassword.generate(cus[0], function(err){
-        console.log(">>>")
         res.render('customer-forgot-sent.html', {customer: cus[0]});
       })
     })

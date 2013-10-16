@@ -1,10 +1,8 @@
 var crypto = require('crypto')
   , mailer = require('nodemailer')
-  , mongoose = require('mongoose')
 
-module.exports = function(dbconn, mailConfig, mailFrom, resetMailSubject, resetMailContent) {
+module.exports = function(mailConfig, mailFrom, resetMailSubject, resetMailContent, mongoose) {
   var Schema = mongoose.Schema
-  mongoose.createConnection(dbconn);
 
 var _createCode = function(){
   return crypto.randomBytes(10).toString('hex')
@@ -37,7 +35,6 @@ ForgotPasswordSchema.static('validateRequest', function(req, res, next){
 
   this.verify(req.query.id, function(err, forgot){
     if (err){
-      console.log(">>> ForgotPassword : Error : ", err)
       return res.redirect('/auth/forgot?fail=2')
     }
     next()
@@ -55,6 +52,7 @@ ForgotPasswordSchema.static('generate', function(customer, cb){
     console.log(">>> ForgotPassword sent:", customer.email)
     var emailTransport = mailer.createTransport("SMTP", mailConfig)
 
+    console.log(">>mailer")
     var envelope = {
       from: mailFrom
     , to: customer.email
