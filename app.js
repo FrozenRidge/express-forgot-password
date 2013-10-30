@@ -10,7 +10,7 @@ module.exports = function(ForgotPassword, Customer){
   })
 
   app.post('/auth/forgot', function(req, res, next){
-    Customer.findByEmail(req.body.email, function(err, cus){
+    Customer.findByEmail(req.body["forgot-email"], function(err, cus){
       if (err || cus.length == 0){
         return res.redirect("/auth/forgot?fail=1")
       }
